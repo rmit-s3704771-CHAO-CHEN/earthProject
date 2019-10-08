@@ -10,9 +10,9 @@
     "main": "public/index.html",
     "scripts": {
         "start": "node dev-server.js 8080",
-        "test": "ehco \"Error: no test specified\" && exit 1"
+        "test": "ehco \"Error: no test specified\" && exit 1",
+        "build": "browserify push.js -o newpush.js"
     },
-
     "homepage": "https://github.com/rmit-s3704771-CHAO-CHEN/earthProject",
     "repository": {
         "type": "git",
@@ -20,16 +20,18 @@
     },
     "engine": "node >= 0.10.21",
     "dependencies": {
-        "when": "2.6.0",
-        "swig": "1.2.2",
-        "mkdirp": "0.3.5",
+        "child_process": "^1.0.2",
         "express": "3.4.4",
+        "grib2json": "latest",
+        "mkdirp": "0.3.5",
         "request": "^2.81.0",
-        "grib2json": "latest"
+        "swig": "1.2.2",
+        "when": "2.6.0",
+        "browserify": "16.5.0",
+        "jquery": "3.4.1"
     },
     "devDependencies": {
         "grunt": "~0.4.1",
-        "grunt-contrib-jshint": "~0.7.1",
-        "request": "^2.81.0"
+        "grunt-contrib-jshint": "~0.7.1"
     }
 }
