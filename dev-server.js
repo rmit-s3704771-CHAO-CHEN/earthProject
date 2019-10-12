@@ -55,12 +55,13 @@ var withAuth = require("./middileware/auth");
 app.use(cacheControl());
 app.use(compression({ filter: compressionFilter }));
 app.use(morgan("dev"));
-app.use(express.static("public"));
+app.use(express.static("views"));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.set("view engine", "ejs");
+app.engine("html", require("ejs").renderFile);
+app.set("view engine", "html");
 app.use(cors());
 
 // ===================
@@ -81,12 +82,12 @@ mongoose
 //       Routers
 // ====================
 const user = require("./routes/user");
-const home = require("./routes/home");
+const earth = require("./routes/earth");
 
-app.use("/home", home);
+app.use("/earth", earth);
 app.use("/users", user);
-//app.get("/", (req, res) => res.redirect("/login"));
-// app.get("*", (req, res) => res.sendStatus(404));
+//app.get("/", (req, res) => res.redirect("/landing.html"));
+app.get("*", (req, res) => res.sendStatus(404));
 
 app.listen(port);
 console.log("Listening on port " + port + "...");

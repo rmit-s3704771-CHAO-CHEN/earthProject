@@ -13,10 +13,10 @@ const secret = "This is a secret String";
 //password is correct. If the password is correct, we will issue
 //a signed token to the requester.
 router.get("/login", function(req, res) {
-  res.render("login");
+  res.render("login.html");
 });
 router.get("/register", function(req, res) {
-  res.render("register");
+  res.render("register.html");
 });
 router.post("/login", function(req, res) {
   const { email, password } = req.body;
@@ -47,7 +47,7 @@ router.post("/login", function(req, res) {
           const token = jwt.sign(payload, secret, {
             expiresIn: "2h"
           });
-          res.cookie("token", token, { httpOnly: true }).redirect("/");
+          res.cookie("token", token, { httpOnly: true }).redirect("/earth");
         }
       });
     }
@@ -72,7 +72,7 @@ router.post("/register", async (req, res) => {
     const token = jwt.sign(payload, secret, {
       expiresIn: "2h"
     });
-    res.cookie("token", token, { httpOnly: true }).redirect("/");
+    res.cookie("token", token, { httpOnly: true }).redirect("/earth");
   } catch (ex) {
     console.log(ex.errors);
     res.status(500).send(ex.message);
