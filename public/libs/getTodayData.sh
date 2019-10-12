@@ -1,6 +1,16 @@
 #!/bin/bash
 
-date=$(date -v -1d '+%Y%m%d')
+yesterdayDate=$(date -d "yesterday" '+%Y-%m-%d')
+date=$(date '+%Y%m%d')
+
+IFS='-' read -ra my_array <<< "$yesterdayDate"
+
+year=${my_array[0]};
+month=${my_array[1]};
+day=${my_array[2]};
+echo $year;
+echo $month;
+echo $day;
 
 echo $date
 
@@ -18,43 +28,52 @@ do
 	if [ $index == 0 ]
 	then
 		grib2json -d -n -o current-wind-surface-level-gfs-1.0.json gfs.t00z.pgrb2.1p00.$i
-		aws s3 mv current-wind-surface-level-gfs-1.0.json s3://earthweatherdata/data/weather/current
+		aws s3 mv current-wind-surface-level-gfs-1.0.json s3://earthweatherdata/data/weather/current/
+		
 	elif [ $index == 1 ]
 	then
 		grib2json -d -n -o current-wind-isobaric-1000hPa-gfs-1.0.json gfs.t00z.pgrb2.1p00.$i
-		aws s3 mv current-wind-isobaric-1000hPa-gfs-1.0.json s3://earthweatherdata/data/weather/current
+		aws s3 mv current-wind-isobaric-1000hPa-gfs-1.0.json s3://earthweatherdata/data/weather/current/
+		
 	elif [ $index == 2 ]
 	then
 		grib2json -d -n -o current-wind-isobaric-850hPa-gfs-1.0.json gfs.t00z.pgrb2.1p00.$i
-		aws s3 mv current-wind-isobaric-850hPa-gfs-1.0.json s3://earthweatherdata/data/weather/current
+		aws s3 mv current-wind-isobaric-850hPa-gfs-1.0.json s3://earthweatherdata/data/weather/current/
+		
 	elif [ $index == 3 ]
 	then
 		grib2json -d -n -o current-wind-isobaric-700hPa-gfs-1.0.json gfs.t00z.pgrb2.1p00.$i
-		aws s3 mv current-wind-isobaric-700hPa-gfs-1.0.json s3://earthweatherdata/data/weather/current
+		aws s3 mv current-wind-isobaric-700hPa-gfs-1.0.json s3://earthweatherdata/data/weather/current/
+		
 	elif [ $index == 4 ]
 	then
 		grib2json -d -n -o current-wind-isobaric-500hPa-gfs-1.0.json gfs.t00z.pgrb2.1p00.$i
-		aws s3 mv current-wind-isobaric-500hPa-gfs-1.0.json s3://earthweatherdata/data/weather/current
+		aws s3 mv current-wind-isobaric-500hPa-gfs-1.0.json s3://earthweatherdata/data/weather/current/
+		
 	elif [ $index == 5 ]
 	then
 		grib2json -d -n -o current-wind-isobaric-250hPa-gfs-1.0.json gfs.t00z.pgrb2.1p00.$i
-		aws s3 mv current-wind-isobaric-250hPa-gfs-1.0.json s3://earthweatherdata/data/weather/current
+		aws s3 mv current-wind-isobaric-250hPa-gfs-1.0.json s3://earthweatherdata/data/weather/current/
+		
 	elif [ $index == 6 ]
 	then
 		grib2json -d -n -o current-wind-isobaric-70hPa-gfs-1.0.json gfs.t00z.pgrb2.1p00.$i
-		aws s3 mv current-wind-isobaric-70hPa-gfs-1.0.json s3://earthweatherdata/data/weather/current
+		aws s3 mv current-wind-isobaric-70hPa-gfs-1.0.json s3://earthweatherdata/data/weather/current/
+		
 	elif [ $index == 7 ]
 	then
 		grib2json -d -n -o current-wind-isobaric-10hPa-gfs-1.0.json gfs.t00z.pgrb2.1p00.$i
-		aws s3 mv current-wind-isobaric-10hPa-gfs-1.0.json s3://earthweatherdata/data/weather/current
+		aws s3 mv current-wind-isobaric-10hPa-gfs-1.0.json s3://earthweatherdata/data/weather/current/
+		
 	else
 		echo "none"
 	fi
 	rm gfs.t00z.pgrb2.1p00.$i
 	index=$index+1
 done
-
-
+cd
+cd earthProject/earthProject/public/libs
+./getSpecificDayData.sh $year $month $day
 
 
 
